@@ -399,6 +399,7 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     # Grab all references to inject them in cells where needed
     ref_regexp = re.compile('\n(\.\. \[(\d+)\].*(?:\n[ ]{7,8}.*)+)')
     math_role_regexp = re.compile(':math:`(.*?)`')
+    cross_ref_regexp = re.compile(':ref:`(.*?) <(.*?)>`')
 
     text = '\n'.join((content for (cell_type, _, content) in blocks
                      if cell_type != 'code'))
@@ -421,6 +422,9 @@ def write_example(src_name, src_dir, rst_dir, cfg):
 
             content = content.replace('.. seealso::', '**See also:**')
             content = re.sub(math_role_regexp, r'$\1$', content)
+
+            # Handle references to other notebooks (just use the name)
+            content = re.sub(cross_ref_regexp, r'$\1$', content)
 
             # Remove math directive when rendering notebooks
             # until we implement a smarter way of capturing and replacing
