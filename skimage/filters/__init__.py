@@ -10,8 +10,8 @@ from ._gabor import gabor_kernel, gabor
 from ._frangi import frangi, hessian
 from .thresholding import (threshold_local, threshold_otsu, threshold_yen,
                            threshold_isodata, threshold_li, threshold_minimum,
-                           threshold_mean, threshold_triangle,
-                           threshold_niblack, threshold_sauvola,
+                           threshold_mean, threshold_triangle, threshold_niblack,
+                           threshold_sauvola, threshold_multiotsu,
                            try_all_threshold, apply_hysteresis_threshold)
 from . import rank
 from .rank import median
@@ -49,6 +49,7 @@ __all__ = ['inverse',
            'threshold_local',
            'threshold_minimum',
            'threshold_mean',
+           'threshold_multiotsu',
            'threshold_niblack',
            'threshold_sauvola',
            'threshold_triangle',

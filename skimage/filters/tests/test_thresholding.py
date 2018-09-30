@@ -5,6 +5,7 @@ from scipy import ndimage as ndi
 import skimage
 from skimage import data
 from skimage._shared._warnings import expected_warnings
+from skimage.color import rgb2gray
 from skimage.filters.thresholding import (threshold_local,
                                           threshold_otsu,
                                           threshold_li,
@@ -13,6 +14,7 @@ from skimage.filters.thresholding import (threshold_local,
                                           threshold_niblack,
                                           threshold_sauvola,
                                           threshold_mean,
+                                          threshold_multiotsu,
                                           threshold_triangle,
                                           threshold_minimum,
                                           try_all_threshold,
@@ -463,3 +465,22 @@ def test_niblack_sauvola_pathological_image():
     value = 0.03082192 + 2.19178082e-09
     src_img = np.full((4, 4), value).astype(np.float64)
     assert not np.any(np.isnan(threshold_niblack(src_img)))
+
+
+def test_bimodal_multiotsu_hist():
+    image = data.camera()
+    thr_otsu = threshold_otsu(image)
+    thr_multi = threshold_multiotsu(image, classes=2)
+    assert thr_otsu == thr_multi
+
+
+def test_check_multiotsu_results():
+    image = 0.25 * np.array([[0, 1, 2, 3, 4],
+                             [0, 1, 2, 3, 4],
+                             [0, 1, 2, 3, 4],
+                             [0, 1, 2, 3, 4]])
+
+    for idx in range(3, 6):
+        thr_multi = threshold_multiotsu(image,
+                                        classes=idx)
+        assert len(thr_multi) == idx-1
