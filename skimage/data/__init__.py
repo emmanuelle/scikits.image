@@ -78,7 +78,7 @@ except ImportError:
         return hasher.hexdigest()
 
 
-def _hash_hash(path, expected_hash):
+def _has_hash(path, expected_hash):
     """Check if the provided path has the expected hash."""
     if not osp.exists(path):
         return False
@@ -121,7 +121,7 @@ def _fetch(data_filename):
     # The file may already be in the data_dir regardless of if Pooch is
     # installed. We may have decided to ship it in the scikit-image
     # distribution
-    if _hash_hash(resolved_path, expected_hash):
+    if _has_hash(resolved_path, expected_hash):
         # Nothing to be done, file is where it is expected to be
         return resolved_path
 
@@ -132,7 +132,7 @@ def _fetch(data_filename):
     # In this case, the file would be located relative to the
     # skimage_distribution_dir
     gh_repository_path = osp.join(skimage_distribution_dir, data_filename)
-    if _has_hash(gh_repository_path):
+    if _has_hash(gh_repository_path, expected_hash):
         parent = osp.dirname(resolved_path)
         os.makedirs(parent, exist_ok=True)
         shutil.copy2(gh_repository_path, resolved_path)
