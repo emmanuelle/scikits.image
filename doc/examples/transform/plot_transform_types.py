@@ -61,7 +61,7 @@ ax.set_title('Euclidean transformation')
 
 
 ######################################################################
-# For a rotation around the center of the image, one can 
+# For a rotation around the center of the image, one can
 # compose a translation to change the origin, a rotation, and finally
 # the inverse of the first translation.
 # in degrees, while it is given in radians for the different kinds of
@@ -117,7 +117,7 @@ ax.set_title('Affine transformation')
 # ========================================
 #
 # A `homography <https://en.wikipedia.org/wiki/Homography>`_, also called
-# projective transformation, preserves lines but not necessarily 
+# projective transformation, preserves lines but not necessarily
 # parallelism.
 
 matrix = np.array([[1, -0.5, 100],
